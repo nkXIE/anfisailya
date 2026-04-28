@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Наши дни ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffe6f0 0%, #ffc0d0 100%);
+            font-family: 'Quicksand', 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* фоновые сердечки */
+        .bg-heart {
+            position: fixed;
+            font-size: 24px;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatHeart 12s infinite linear;
+        }
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-20vh) rotate(20deg); opacity: 0; }
+        }
+
+        .container {
+            max-width: 550px;
+            width: 100%;
+            background: rgba(255, 250, 252, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 72px;
+            padding: 30px 25px 40px;
+            text-align: center;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .heart {
+            font-size: 90px;
+            animation: heartbeat 1.2s ease infinite, bounceSoft 2s infinite;
+            display: inline-block;
+            cursor: pointer;
+            filter: drop-shadow(0 8px 12px rgba(231, 76, 111, 0.3));
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.12); }
+            40% { transform: scale(1.15); }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes bounceSoft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .days-number {
+            font-size: 110px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e8436e, #ff8aa8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 10px 0 5px;
+            letter-spacing: 6px;
+            cursor: pointer;
+        }
+        .days-label {
+            font-size: 28px;
+            font-weight: 600;
+            color: #d44c73;
+            background: rgba(255, 240, 245, 0.7);
+            display: inline-block;
+            padding: 4px 20px;
+            border-radius: 60px;
+        }
+        .start-date {
+            margin-top: 12px;
+            font-size: 16px;
+            color: #b14b6e;
+            background: #ffeef3;
+            display: inline-flex;
+            padding: 6px 20px;
+            border-radius: 50px;
+        }
+
+        .photo-frame {
+            margin: 20px auto 15px;
+            width: 260px;
+            height: 260px;
+            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 8px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        .photo-frame:hover { transform: scale(1.02); }
+        .daily-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 52px;
+            object-fit: cover;
+        }
+        .photo-caption {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #c26a8b;
+            font-weight: 600;
+            background: rgba(255, 235, 242, 0.7);
+            display: inline-block;
+            padding: 5px 18px;
+            border-radius: 60px;
+        }
+
+        .stats {
+            margin-top: 25px;
+            padding: 12px 15px;
+            background: rgba(255, 245, 248, 0.8);
+            border-radius: 60px;
+            font-size: 14px;
+            color: #d45c82;
+            font-weight: 500;
+        }
+
+        .extra-panel {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .music-btn {
+            background: rgba(231, 76, 111, 0.85);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .music-btn:hover { background: #e8436e; transform: scale(0.97); }
+        .timer-block {
+            background: rgba(255,245,248,0.8);
+            border-radius: 50px;
+            padding: 10px 18px;
+            font-size: 15px;
+            color: #c95a7c;
+            font-weight: 600;
+        }
+
+        .memories-btn {
+            background: linear-gradient(95deg, #f2648a, #e74c6f);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 25px 0 10px;
+            cursor: pointer;
+            box-shadow: 0 12px 20px rgba(231,76,111,0.3);
+            transition: 0.2s;
+        }
+        .memories-btn:hover { transform: translateY(-3px); }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #e6a2bb;
+        }
+
+        .floating-heart {
+            position: fixed;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: floatUp 1s ease-out forwards;
+        }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+        }
+
+        /* ----- Карусель ----- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(12px);
+        }
+        .modal-content {
+            background: rgba(255, 248, 250, 0.96);
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 64px;
+            padding: 20px;
+            position: relative;
+            text-align: center;
+            width: 800px;
+            overflow: hidden;
+        }
+        .close-modal {
+            position: absolute;
+            top: 18px;
+            right: 25px;
+            font-size: 38px;
+            font-weight: bold;
+            color: #e892ab;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 20;
+        }
+        .close-modal:hover { color: #e74c6f; }
+
+        .carousel-wrapper {
+            position: relative;
+            margin: 20px 0 15px;
+            border-radius: 48px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.05);
+        }
+        .carousel-track {
+            display: flex;
+            will-change: transform;
+            gap: 16px;
+            padding: 10px 0;
+        }
+        .carousel-card {
+            flex: 0 0 auto;
+            width: 200px;
+            transition: all 0.1s linear; /* переход для мягкости, но классы меняются быстро */
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 12px 22px rgba(0, 0, 0, 0.1);
+            /* начальные стили */
+            filter: blur(0px);
+            transform: scale(1);
+        }
+        .carousel-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+        }
+        .bg-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(24px) brightness(0.7);
+            opacity: 0.5;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 48px;
+        }
+        .info-message {
+            padding: 40px;
+            color: #c26486;
+            font-weight: 500;
+        }
+        @media (max-width: 600px) {
+            .carousel-card { width: 140px; }
+            .carousel-card img { height: 170px; }
+            .days-number { font-size: 80px; }
+            .heart { font-size: 70px; }
+        }
+    </style>
+</head>
+<body>
+<div id="bgHeartsContainer"></div>
+
+<div class="container">
+    <div class="heart">❤️</div>
+    <div class="days-number" id="daysCounter">0</div>
+    <div class="days-label">дней вместе</div>
+    <div class="start-date">🗓️ С 2 января 2025</div>
+
+    <div class="photo-frame">
+        <img class="daily-photo" id="dailyPhoto" alt="Наше фото">
+    </div>
+    <div class="photo-caption" id="photoCaption">✨ фото дня ✨</div>
+
+    <div class="stats" id="statsBlock">💞 загружается...</div>
+
+    <div class="extra-panel">
+        <button class="music-btn" id="musicBtn">🎵 Включить музыку</button>
+        <div class="timer-block" id="timerBlock">❤️ До события: -- дн.</div>
+    </div>
+
+    <button class="memories-btn" id="memoriesBtn">📸 Воспоминания</button>
+    <footer>ты — моё сердце 💕</footer>
+</div>
+
+<div id="memoriesModal" class="modal">
+    <div class="modal-content">
+        <button class="close-modal" id="closeModalBtn">&times;</button>
+        <div class="carousel-wrapper" style="position: relative; z-index: 2;">
+            <div class="carousel-track" id="carouselTrackFront"></div>
+        </div>
+        <div class="bg-carousel" id="bgCarousel">
+            <div class="carousel-track" id="carouselTrackBg"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ---------- фоновые сердечки ----------
+    (function() {
+        const container = document.getElementById('bgHeartsContainer');
+        if(!container) return;
+        for(let i=0;i<20;i++) {
+            const heart = document.createElement('div');
+            heart.className = 'bg-heart';
+            heart.innerHTML = ['❤️','💖','💗','💓','🌸'][Math.floor(Math.random()*5)];
+            heart.style.left = Math.random()*100+'%';
+            heart.style.animationDuration = 8+Math.random()*15+'s';
+            heart.style.animationDelay = Math.random()*15+'s';
+            heart.style.fontSize = 16+Math.random()*30+'px';
+            heart.style.opacity = 0.1+Math.random()*0.2;
+            container.appendChild(heart);
+        }
+    })();
+
+    // ---------- счётчик ----------
+    const START_DATE = new Date(2025, 0, 2);
+    function getDaysTogether() {
+        const today = new Date(); today.setHours(0,0,0,0);
+        const start = new Date(START_DATE); start.setHours(0,0,0,0);
+        return Math.floor((today - start) / (1000*60*60*24));
+    }
+    function updateCounter() {
+        const days = getDaysTogether();
+        document.getElementById('daysCounter').innerText = days;
+        const hours = days*24, minutes = days*24*60;
+        const percent = Math.min((days / (80*365.25)) * 100, 99.9);
+        document.getElementById('statsBlock').innerHTML = `
+            ⏱️ ${hours.toLocaleString()} часов вместе · 💖 ${minutes.toLocaleString()} минут<br>
+            🌍 это ~ ${percent.toFixed(2)}% от целой жизни (80 лет)
+        `;
+        return days;
+    }
+
+    // сердечки при клике
+    let clickCount = 0, clickTimeout = null;
+    function createFloatingHeart(x,y) {
+        const h = document.createElement('div');
+        h.className = 'floating-heart';
+        h.innerText = '❤️';
+        h.style.left = (x-15)+'px'; h.style.top = (y-20)+'px';
+        h.style.fontSize = (20+Math.random()*20)+'px';
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),1000);
+    }
+    function onCounterClick(e) {
+        clickCount++;
+        if(clickCount===1) clickTimeout = setTimeout(()=>clickCount=0,800);
+        if(clickCount===5) {
+            const rect = e.target.getBoundingClientRect();
+            const cx = rect.left+rect.width/2, cy = rect.top+rect.height/2;
+            for(let i=0;i<12;i++) setTimeout(()=>{
+                const dx = (Math.random()-0.5)*40, dy = (Math.random()-0.5)*30;
+                createFloatingHeart(cx+dx, cy+dy);
+            }, i*30);
+            if(navigator.vibrate) navigator.vibrate(100);
+            clickCount=0; clearTimeout(clickTimeout);
+        }
+    }
+    document.querySelector('.heart')?.addEventListener('click', (e)=>{
+        const rect = e.target.getBoundingClientRect();
+        const x = rect.left+rect.width/2, y = rect.top+rect.height/2;
+        for(let i=0;i<4;i++) createFloatingHeart(x+(Math.random()-0.5)*30, y+(Math.random()-0.5)*20);
+    });
+    document.getElementById('daysCounter').addEventListener('click', onCounterClick);
+
+    // музыка
+    let audio = null, musicPlaying = false;
+    const musicBtn = document.getElementById('musicBtn');
+    function initMusic() {
+        audio = new Audio('music/love.mp3');
+        audio.loop = true; audio.volume = 0.3;
+        audio.addEventListener('error', ()=> { musicBtn.innerText = '🎵 Музыка не найдена'; musicBtn.disabled = true; });
+    }
+    function toggleMusic() {
+        if(!audio){ initMusic(); if(!audio || audio.disabled) return; }
+        if(musicPlaying) { audio.pause(); musicBtn.innerText = '🎵 Включить музыку'; }
+        else { audio.play().catch(()=>{}); musicBtn.innerText = '🎵 Выключить музыку'; }
+        musicPlaying = !musicPlaying;
+    }
+    musicBtn.addEventListener('click', toggleMusic);
+
+    // таймер до 2 января 2026
+    function updateTimer() {
+        const next = new Date(2026,0,2);
+        const today = new Date(); today.setHours(0,0,0,0);
+        const diff = Math.ceil((next - today) / (1000*60*60*24));
+        const timerDiv = document.getElementById('timerBlock');
+        if(diff>0) timerDiv.innerHTML = `⏳ До годовщины: ${diff} дн.`;
+        else if(diff===0) timerDiv.innerHTML = `🎉 СЕГОДНЯ ГОДОВЩИНА! 🎉`;
+        else timerDiv.innerHTML = `❤️ Годовщина была ${-diff} дней назад`;
+    }
+    updateTimer(); setInterval(updateTimer, 3600000);
+
+    // фото дня
+    const photoNames = ["1.jpg","2.jpg","3.jpg","4.jpg","5.jpg"];
+    function updatePhotoByDay(day) {
+        const idx = day % photoNames.length;
+        const name = photoNames[idx];
+        const img = document.getElementById('dailyPhoto');
+        const cap = document.getElementById('photoCaption');
+        img.src = "photos/"+name;
+        cap.innerHTML = `📸 ${name.replace(/\.[^/.]+$/,"")} ・ день ${day}`;
+        img.onerror = () => cap.innerHTML = `❌ не найден photos/${name}`;
+    }
+
+    // ---------- КАРУСЕЛЬ с явным управлением классами ----------
+    let photosArray = [];
+    let frontTrack, bgTrack;
+    let animId = null, offsetX = 0, speed = 1.8, isAnim = false;
+    let cardWidth = 216, totalWidth = 0, loading = false;
+
+    function loadAllPhotos() {
+        return new Promise((resolve) => {
+            const arr = [];
+            let i = 1;
+            const next = () => {
+                const url = `photos/${i}.jpg`;
+                const img = new Image();
+                img.onload = () => { arr.push(url); i++; next(); };
+                img.onerror = () => {
+                    const urlPng = `photos/${i}.png`;
+                    const img2 = new Image();
+                    img2.onload = () => { arr.push(urlPng); i++; next(); };
+                    img2.onerror = () => resolve(arr);
+                    img2.src = urlPng;
+                };
+                img.src = url;
+            };
+            next();
+        });
+    }
+
+    async function initCarousel() {
+        if(loading) return;
+        loading = true;
+        photosArray = await loadAllPhotos();
+        loading = false;
+        if(modal.style.display === 'flex') { stopAnimation(); buildCarousel(); }
+    }
+
+    function buildCarousel() {
+        if(!frontTrack || !bgTrack) return;
+        frontTrack.innerHTML = ''; bgTrack.innerHTML = '';
+        if(!photosArray.length){
+            frontTrack.innerHTML = '<div class="info-message">Фото не найдены. Положите 1.jpg, 2.jpg... в папку photos</div>';
+            return;
+        }
+        const copies = 6;
+        for(let c=0; c<copies; c++){
+            photosArray.forEach(src => {
+                const cardF = createCard(src); frontTrack.appendChild(cardF);
+                const cardB = createCard(src); bgTrack.appendChild(cardB);
+            });
+        }
+        updateCardWidth();
+        offsetX = 0;
+        frontTrack.style.transform = `translateX(0px)`;
+        bgTrack.style.transform = `translateX(0px)`;
+        startAnimation();
+    }
+
+    function createCard(src) {
+        const div = document.createElement('div'); div.className = 'carousel-card';
+        const img = document.createElement('img'); img.src = src;
+        img.onerror = () => img.src = 'https://placehold.co/400x400/ffb6c1/white?text=❤️';
+        div.appendChild(img);
+        return div;
+    }
+
+    function updateCardWidth() {
+        const first = document.querySelector('#carouselTrackFront .carousel-card');
+        if(first){
+            const rect = first.getBoundingClientRect();
+            const style = getComputedStyle(first);
+            const ml = parseFloat(style.marginLeft)||0, mr = parseFloat(style.marginRight)||0;
+            cardWidth = rect.width + ml + mr + 16; // + gap
+        } else cardWidth = 216;
+        if(photosArray.length) totalWidth = cardWidth * photosArray.length;
+    }
+
+    // Главная функция: применяем стили к каждой карточке в зависимости от позиции относительно центра
+    function applyStylesByPosition() {
+        if(!frontTrack) return;
+        const cards = frontTrack.querySelectorAll('.carousel-card');
+        if(!cards.length) return;
+        const wrapper = document.querySelector('.carousel-wrapper');
+        const wrapperRect = wrapper.getBoundingClientRect();
+        const centerX = wrapperRect.left + wrapperRect.width/2;
+
+        cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width/2;
+            const isLeft = rect.right < centerX; // уже прошло центр?
+            const isCenter = Math.abs(cardCenter - centerX) < (rect.width * 0.3); // близко к центру
+
+            if(isCenter) {
+                // центральное фото: увеличиваем, без размытия
+                card.style.transform = 'scale(1.1)';
+                card.style.filter = 'blur(0px) brightness(1)';
+                card.style.zIndex = '5';
+            } else if(isLeft) {
+                // фото слева (прошлое): размытие и уменьшение
+                card.style.transform = 'scale(0.85)';
+                card.style.filter = 'blur(4px) brightness(0.8)';
+                card.style.zIndex = '1';
+            } else {
+                // фото справа (будущее): чёткие, нормальный размер
+                card.style.transform = 'scale(1)';
+                card.style.filter = 'blur(0px) brightness(1)';
+                card.style.zIndex = '1';
+            }
+        });
+    }
+
+    function animate() {
+        if(!isAnim) return;
+        offsetX -= speed;
+        if(Math.abs(offsetX) >= totalWidth && totalWidth>0){
+            const shift = Math.floor(Math.abs(offsetX)/totalWidth) * totalWidth;
+            offsetX += shift;
+            const frontCards = frontTrack.children, bgCards = bgTrack.children;
+            const num = Math.floor(shift / cardWidth);
+            if(num>0 && frontCards.length){
+                for(let i=0; i< num % frontCards.length; i++){
+                    if(frontCards[i]) frontTrack.appendChild(frontCards[i]);
+                    if(bgCards[i]) bgTrack.appendChild(bgCards[i]);
+                }
+            }
+        }
+        frontTrack.style.transform = `translateX(${offsetX}px)`;
+        bgTrack.style.transform = `translateX(${offsetX}px)`;
+        // применяем стили после каждого сдвига
+        applyStylesByPosition();
+        animId = requestAnimationFrame(animate);
+    }
+
+    function startAnimation() { if(animId) cancelAnimationFrame(animId); if(photosArray.length){ isAnim=true; animId=requestAnimationFrame(animate); } }
+    function stopAnimation() { if(animId){ cancelAnimationFrame(animId); animId=null; } isAnim=false; }
+
+    // модальное окно
+    const modal = document.getElementById('memoriesModal');
+    const memoriesBtn = document.getElementById('memoriesBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    memoriesBtn.onclick = async () => {
+        modal.style.display = 'flex';
+        frontTrack = document.getElementById('carouselTrackFront');
+        bgTrack = document.getElementById('carouselTrackBg');
+        if(!photosArray.length && !loading) await initCarousel();
+        buildCarousel();
+        const resizeHandler = () => { updateCardWidth(); if(photosArray.length) startAnimation(); };
+        window.addEventListener('resize', resizeHandler);
+        setTimeout(() => applyStylesByPosition(), 100);
+        modal._resizeHandler = resizeHandler;
+    };
+    function closeModal() {
+        modal.style.display = 'none';
+        stopAnimation();
+        if(modal._resizeHandler){ window.removeEventListener('resize', modal._resizeHandler); delete modal._resizeHandler; }
+    }
+    closeModalBtn.onclick = closeModal;
+    window.onclick = (e) => { if(e.target === modal) closeModal(); };
+
+    // автообновление счётчика в полночь
+    function scheduleDaily() {
+        const now = new Date();
+        const midnight = new Date(); midnight.setHours(24,0,0,0);
+        const ms = midnight - now;
+        setTimeout(() => {
+            const days = updateCounter();
+            updatePhotoByDay(days);
+            setInterval(() => { updateCounter(); updatePhotoByDay(getDaysTogether()); }, 24*60*60*1000);
+        }, ms);
+    }
+
+    // запуск
+    updateCounter();
+    scheduleDaily();
+    updatePhotoByDay(getDaysTogether());
+    initMusic();
+    initCarousel(); // предзагрузка, после чего карусель будет готова при открытии
+</script>
+</body>
+</html>
